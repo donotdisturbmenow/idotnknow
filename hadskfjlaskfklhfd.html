@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="s.css">
+    <style>
+        body {
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .rubber-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: cyan;
+            cursor: pointer;
+            display: inline-block; 
+            animation: rubberBand 1.2s infinite;
+        }
+
+        @keyframes rubberBand {
+            0% { transform: scale(1, 1); }
+            30% { transform: scale(1.25, 0.75); }
+            40% { transform: scale(0.75, 1.25); }
+            50% { transform: scale(1.15, 0.85); }
+            65% { transform: scale(0.95, 1.05); }
+            75% { transform: scale(1.05, 0.95); }
+            100% { transform: scale(1, 1); }
+        }
+
+        .df img {
+            height: 300px;
+            width: 300px;
+            object-fit: cover;
+            display: none; /* শুরুতে ছবিগুলো হাইড থাকবে */
+        }
+    </style>
+    
+    <script>
+        let slideIndex = 0; 
+        
+        window.onload = function() {
+            showSlides();   
+        };
+
+        function showSlides() {
+            let slides = document.querySelectorAll(".slide");
+            
+            // সব ইমেজ একসাথে হাইড করার ওয়ান-লাইনার
+            slides.forEach(img => img.style.display = "none");
+            
+            // ইনডেক্স ট্রিক (১, ২, ৩ এর পর আবার ১ এ ফিরে আসবে নিজে নিজেই)
+            slideIndex = (slideIndex % slides.length) + 1;
+            
+            // নির্দিষ্ট ইমেজের ডিসপ্লে অন করা
+            slides[slideIndex - 1].style.display = "block";
+            
+            // অটো স্লাইডশো সচল রাখা
+            setTimeout(showSlides, 2000);
+        }
+    </script>
+</head>
+<body>
+
+   <div class="df">
+        <img class="slide" src="image/customer-service.png"/>   
+        <img class="slide" src="image/image1.jpg"/>  
+        <img class="slide" src="image/image2.jpg"/>
+   </div>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Responsive Page</title>
+     <link rel="stylesheet" href="s.css">
+     <link rel="stylesheet" href="textanimation/textanimtion.css">
+    <style>
+body {
+    margin: 0;             /* Make the body take up the full height of the screen */
+    display: flex;     
+    position: relative;    /* Turn on Flexbox */
+    flex-direction: column;/* Stack your main layout blocks vertically */
+    margin-top: 5vh; /* Center everything vertically (top to bottom) */
+    align-items: center;   /* Center everything horizontally (left to right) */
+}
+
+     @media (min-width: 768px) {
+    /* Styles for Tablets and up */
+    }
+
+    @media (min-width: 1024px) {    
+
+    }
+    
+    .topseccontainer img{height: 24px; }
+   
+.topcontainer img{height: 24px;
+width: 24px;
+object-fit: contain;
+cursor: pointer;
+}
+.topseccontainer a{font-weight: bolder;}
+a{text-decoration: none;color:  black;transition: transform 0.3s;}
+.topcontainer a:hover, .topcontainer img:hover{transform: scale(1.1);}
+
+.searchbox{
+    padding: 1vw 10vw;
+border-radius: 2vw;
+outline: none;
+border: 2px solid cyan;
+box-shadow: 0 0 5px 1px rgb(35, 173, 211) ;
+}
+
+    </style>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const img = document.querySelectorAll(".searchicon,.searchbox");
+
+    img[0].addEventListener("click", function () {
+        if (img[1].style.display === "none" || img[1].style.display === "") {
+            img[1].style.display = "block";
+        } else {
+            img[1].style.display = "none";
+        }
+    });
+});
+</script>
+</head>
+<body class="pr">
+
+<div class="w90 df aic jcsb topcontainer">
+<div class="w20 df jcsb aic"><a href="https://gemini.google.com/app">About Us</a> <a href="https://gemini.google.com/app">Privacy</a><a href="https://gemini.google.com/app">FAQ</a><a href="https://gemini.google.com/app">Career</a></div>
+<div class="w30 aic df jcsb">
+    <a href="https://gemini.google.com/app">My Wishlist</a> <a href="https://gemini.google.com/app">Track Your Order</a>
+    <a href="https://www.facebook.com">
+    <img src="image/facebook.png"> </a>
+    <a href="https://www.facebook.com">
+    <img src="image/youtube.png"></a>
+    <a href="https://www.facebook.com">
+    <img src="image/twitter.png"></a>
+    <a href="https://www.facebook.com">
+    <img src="image/twitter (1).png"></a>
+    <a href="https://www.facebook.com">
+    <img src="image/instagram.png"></a>
+</div>
+</div>
+<div class="w90 df jcc fdc aic ps">  
+    <div class="w90 df aic jcsb mt topseccontainer">
+    <img class="logo" style="width: 200px; height:50px;" src="image/logo.png">
+    <div class="w40 df jcsb aic"><a href="#">Home</a><a href="#">Men</a><a href="#">women</a><a href="#">Baby Collection</a><a href="#">Pages</a><a href="#">Blog</a><a href="#">Contact</a></div>
+    <div class="w10">
+        <img class="mr searchicon" src="image/search-interface-symbol (1).png">
+        <img class="mr" src="image/customer-service.png">
+        <img src="image/shopping-cart.png">
+    </div>
+    
+</div>
+
+</div>
+
+<div class="pr df fdc jcc aic">
+<marquee style="font-size: 3vw; color: orange; width: 80vw;">Get the fuck out of my way</marquee>
+<input class="searchbox dn pa w30" style="top: 0;" placeholder="search ur fucking things here">
+</div>
+<div class="bigimage pr">
+    <div class="image active"> <img style="width: 100vw;" src="image/image1.jpg"> 
+        <div class="text-container">
+            <p class="bwanimation">Biggest Sale Off The year</p>
+            <h1 class="floatUpDown">69% Off</h1>
+          <a href="https://gemini.google.com/app">
+   <button style="padding: 1vw 3vw;" class="nbd">SHop Now</button>
+</a>        </div>
+    </div>
+    <div class="image"> 
+        <img style="width: 100vw;" src="image/image2.jpg"> 
+        <div class="text-container">
+            <p class="bwanimation">Biggest Sale Off The year</p>
+            <h1 class="floatUpDown">69% Off</h1>
+          <a href="https://gemini.google.com/app">
+   <button style="padding: 1vw 3vw;" class="nbd">SHop Now</button>
+</a>        </div>
+    </div>
+    <div class="image"> 
+        <img style="width: 100vw;" src="image/image3.jpg"> 
+        <div class="text-container">
+            <p class="bwanimation">Biggest Sale Off The year</p>
+            <h1 class="floatUpDown">69% Off</h1>
+         <a href="https://gemini.google.com/app">
+   <button style="padding: 1vw 3vw;" class="nbd">SHop Now</button>
+</a>        </div>
+    </div>
+</div>
+  <style>
+    .text-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Shifts container back by half its own width/height */
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 3vw;
+    align-items: center;
+    text-align: center;
+    width: 80%; /* Prevents text from breaking weirdly on small screens */
+    color: white; /* Optional: makes text readable over dark images */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Optional: adds readability contrast */
+}
+ 
+.image{
+    width: 100vw;
+    margin-top: 2vh;
+    visibility: hidden;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: opacity 2s, transform 2s;    }
+.image.active{
+opacity: 1;transform: translateY(0px);
+position: absolute;
+visibility: visible;
+top: 0;
+left: 0;
+}
+  </style>
+<script> 
+    let index=0;
+    ff();
+    function ff() {
+        let bigimage=document.querySelectorAll(".image");
+        bigimage[index].classList.remove("active");
+        index++;
+        index=index%bigimage.length;
+        bigimage[index].classList.add("active");
+        setTimeout(ff,4000);
+    }
+</script>
+</body>
+</html>

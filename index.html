@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Responsive Page</title>
+    <link rel="stylesheet" href="s.css">
+    <link rel="stylesheet" href="textanimation/textanimtion.css">
+    <style>
+        /* Base Grid Setup */
+        body {
+            display: grid;  
+            grid-template-columns: repeat(20, 1fr); 
+            /* Defines 5 separate distinct rows that scale beautifully */
+            grid-template-rows: auto auto auto auto auto;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            row-gap: 15px; /* Adds consistent spacing between components vertically */
+        }
+
+        /* --- ROW 1: TOP META HEADER LINKS --- */
+        .one { grid-column: 3/7; grid-row: 1; margin-top: 2vh; }
+        .two { grid-column: 13/16; grid-row: 1; margin-top: 2vh;}
+        .one a, .two a { color: rgb(116, 101, 82); text-decoration: none; }
+        .three { grid-column: 17/20; margin-top: 2vh; grid-row: 1; display: flex; justify-content: flex-end; }
+        .three img { height: 24px; margin-left: 1vw; }
+
+        /* --- ROW 2: MAIN PRIMARY NAVIGATION DECK --- */
+        .four { grid-column: 2/5; grid-row: 2; }
+        .five { grid-column: 6/16; grid-row: 2; font-weight: bolder; }
+        .six { grid-column: 18/20; grid-row: 2; }
+        .six img { height: 24px; }
+
+        /* --- ROW 3: UTILITY PROMOTION TICKER PANEL --- */
+        .seven { grid-column: 2/20; grid-row: 3; color: red; margin: 0; }
+        .seven.active { display: none; } /* Use display: none so it clears space entirely when search opens */
+
+        .eight { 
+            grid-column: 6/16; 
+            grid-row: 3; 
+            opacity: 0; 
+            display: none; 
+            transform: translateY(200px); 
+            transition: opacity 0.5s easy, transform 0.5s ease; 
+            padding: 12px; 
+            outline: none; 
+            border: 1px solid red; 
+            border-radius: 5px; 
+            box-shadow: 0 0 20px 1px red; 
+        }
+        .eight.active { opacity: 1; display: block; transform: translateY(0px); }
+
+        .nine { grid-column: 2/20; grid-row: 3; font-size: 2vw; margin: 0; }
+
+        /* --- ROW 4: BANNER SLIDESHOW COMPONENT PANEL --- */
+        .slider-container {
+            grid-column: 2/20;
+            grid-row: 4;
+            height: 80vh;          /* Defines explicit, reliable visual rendering bounds */
+            position: relative;    /* Locks inner elements on top of each other safely */
+            width: 100%;
+        }
+
+        .ten {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin-top: 5vh;
+            border-radius: 1vw;
+            border: 3px solid red;
+            box-shadow: 0 0 15px 3px red;
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            
+            /* Structural hide states */
+            visibility: hidden; 
+            opacity: 0; 
+            transform: translateX(100px); 
+            transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s;
+        }
+        
+        .ten.active {
+            visibility: visible; 
+            opacity: 1; 
+            transform: translateX(0px);
+        }
+
+        /* Inner banner textual text animations */
+        .ten h1, 
+        .ten p, 
+        .ten button { 
+            color: rgb(232, 13, 13); 
+            visibility: hidden; 
+            opacity: 0; 
+            transform: translateY(100px); 
+            transition: opacity 1.2s ease, transform 1.2s ease, visibility 1.2s; 
+        }
+
+        .ten.active h1, 
+        .ten.active p, 
+        .ten.active button {
+            visibility: visible; 
+            opacity: 1; 
+            transform: translateY(0px);
+        }
+
+        /* --- ROW 5: CATEGORIES PRODUCT CARDS --- */
+        .eleven { 
+            grid-column: 2/20; 
+            grid-row: 5;
+            margin-top: 10vh;
+            margin-bottom: 5vh;
+        }
+        
+        .eleven div { 
+            background-position: center; 
+            background-size: cover; 
+            width: 25vw; 
+            height: 400px;
+            border-radius: 8px;
+            border: 3px solid red;
+            box-shadow: 0 0 15px 1px red;
+            transition: transform 1s, box-shadow 1s;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+        }
+        .eleven div:hover{transform: scale(0.9);   box-shadow: 0 0 0px 0px red;}
+        .twelve{grid-row: 6; grid-column: 2/20;}
+        .trending img{height: 24px; margin-top: 250px; margin-left: 20px;}
+        .trendingimg1 img{visibility: hidden; opacity: 0; transition: visibility 1s, opacity 1s;}
+        .trendingimg1:hover img{visibility: visible; opacity: 1;}
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Part 1: Search Panel Layout Toggle Switches
+            let classes = document.querySelectorAll(".searchicon, .seven, .eight, .ten");
+            if (classes[0]) {
+                classes[0].addEventListener("click", function() {
+                    // Toggles standard display targets safely
+                    const ticker = document.querySelector(".seven");
+                    const searchInput = document.querySelector(".eight");
+                    if (ticker && searchInput) {
+                        ticker.classList.toggle("active");
+                        searchInput.classList.toggle("active");
+                    }
+                });
+            }
+            // Part 2: Automated Rotating Slider Core Routine
+            let slides = document.querySelectorAll(".ten");
+            let index = 0;
+
+            // Initialize display state for first index banner 
+            if (slides.length > 0) {
+                slides[index].classList.add("active");
+            }
+
+            // Run sliding rotation loop every 5 seconds
+            setInterval(imageslide, 5000);
+
+            function imageslide() {
+                if (slides.length === 0) return;
+                
+                // Clear old layer state
+                slides[index].classList.remove("active");
+                
+                // Cycle array indices index safely
+                index++;
+                if (index >= slides.length) { 
+                    index = 0; 
+                }
+                
+                // Activate next visual slide layer
+                slides[index].classList.add("active");
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="one df jcsb"><a>About Us</a><a>Privacy</a><a>FAQ</a><a>Careers</a></div>
+    <div class="two df jcsb"><a>My List</a><a>Track Your Order</a></div>
+    <div class="three"><img src="image/instagram.png"><img src="image/facebook.png"><img src="image/twitter (1).png"><img src="image/twitter.png"><img src="image/youtube.png"></div>
+    
+    <img class="four" src="image/logo.png">
+    <div class="five df jcsb aic"><a>Home</a> <a>Men</a><a>Women</a><a>Baby Collection</a><a>Pages</a><a>Blog</a><a>Contact</a></div>
+    <div class="six df jcsb aic"><img class="searchicon" src="image/search-interface-symbol (1).png"><img src="image/customer-service.png"><img src="image/shopping-cart.png"></div>
+    
+    <marquee class="seven cor" style="font-size: 2vw;">up to 69% off so buy now</marquee>
+    <input class="eight" placeholder="search your item here">
+    <p class="nine dn">Menu</p>
+
+    <div class="slider-container">
+        <div class="ten df jcfe aic" style="background-image: url('image/image2.jpg');">  
+            <div class="df jcc fdc aic" style="margin-right: 10vw;">
+                <h1 class="m0 bwanimation" style="font-size: 6vw;">30% Off</h1>
+                <p style="font-size: 2vw;">buy now for best price</p>
+                <a href=""><button class="nbd">Shop Now</button> </a>
+            </div> 
+        </div>
+        
+        <div class="ten ten1 df aic" style="background-image: url('image/image1.jpg');">  
+            <div class="df jcc fdc aic" style="margin-left: 10vw;">
+                <h1 class="m0 bwanimation" style="font-size: 6vw;">30% Off</h1>
+                <p style="font-size: 2vw;">buy now for best price</p>
+                <a href=""><button class="nbd">Shop Now</button> </a>
+            </div> 
+        </div>
+    </div>
+
+    <div class="eleven df jcsb aic"> 
+        <div class="df fdc jcfe aic" style="background-image: url('image/catogoriimage1.jpg'); "><h1>Men Fashion</h1><a class="mb cw" href="http://">Shop Now</a></div>
+        <div class="df fdc jcfe aic" style="background-image: url('image/catogoriimage2.jpg'); "><h1>Women Fashion</h1><a class="mb cw" href="http://">Shop Now</a></div>
+        <div class="df fdc jcfe aic" style="background-image: url('image/catogoriimage3.jpg'); "><h1>Baby Fashion</h1><a class="mb cw" href="http://">Shop Now</a></div> 
+    </div>
+
+    <div class="twelve df fdc jcsb">
+        <div class="df jcsb">
+        <h1>Trending This Week</h1>
+         <div class="df jcsb aic cr w30"><p>Men</p><p>Women</p><p>Baby</p><p>Fashion</p></div>
+        </div>
+        <div class="df jcsb trending">
+            <div class="df fdc"> 
+                <div class="df jcc aic w20 h50 bpc bsc trendingimg1" style="background-image: url('image/trending1.png');"><img class=" tendingimgdtu" src="image/shopping-cart.png"><img class=" tendingimgdtu" src="image/heart.png"><img class=" tendingimgdtu" src="image/plus.png"></div>
+                <div class="df fdc jcc aic m0"><p>Cashmere tank + bag</p><p class="m0 cr">999$ -1900</p></div>
+         </div>
+           
+      <div class="df fdc"> 
+                <div class="df jcc aic w20 h50 bpc bsc trendingimg1" style="background-image: url('image/trending2.png');"><img class=" tendingimgdtu" src="image/shopping-cart.png"><img class=" tendingimgdtu" src="image/heart.png"><img class=" tendingimgdtu" src="image/plus.png"></div>
+                <div class="df fdc jcc aic m0"><p>Cashmere tank + bag</p><p class="m0 cr">999$ -1900</p></div>
+         </div>  <div class="df fdc"> 
+                <div class="df jcc aic w20 h50 bpc bsc trendingimg1" style="background-image: url('image/trending3.png');"><img class=" tendingimgdtu" src="image/shopping-cart.png"><img class=" tendingimgdtu" src="image/heart.png"><img class=" tendingimgdtu" src="image/plus.png"></div>
+                <div class="df fdc jcc aic m0"><p>Cashmere tank + bag</p><p class="m0 cr">999$ -1900</p></div>
+         </div>  <div class="df fdc"> 
+                <div class="df jcc aic w20 h50 bpc bsc trendingimg1" style="background-image: url('image/trending1.png');"><img class=" tendingimgdtu" src="image/shopping-cart.png"><img class=" tendingimgdtu" src="image/heart.png"><img class=" tendingimgdtu" src="image/plus.png"></div>
+                <div class="df fdc jcc aic m0"><p>Cashmere tank + bag</p><p class="m0 cr">999$ -1900</p></div>
+         </div>  </div>
+    </div>
+
+    <div class="thirteen df jcc mt" style="grid-column: 2/20; font-size: 3vw;"> You May Like </div>
+    <div  class="thirteen trending df jcsb mt" style="grid-column: 2/20;">
+      
+    
+            <div class="df fdc"> 
+                <div class="df jcc aic w20 h50 bpc bsc trendingimg1" style="background-image: url('image/product-1.jpg');"><img class=" tendingimgdtu" src="image/shopping-cart.png"><img class=" tendingimgdtu" src="image/heart.png"><img class=" tendingimgdtu" src="image/plus.png"></div>
+                <div class="df fdc jcc aic m0"><p>Cashmere tank + bag</p><p class="m0 cr">999$ -1900</p></div>
+         </div>
+           
+      <div class="df fdc"> 
+                <div class="df jcc aic w20 h50 bpc bsc trendingimg1" style="background-image: url('image/product-2.jpg');"><img class=" tendingimgdtu" src="image/shopping-cart.png"><img class=" tendingimgdtu" src="image/heart.png"><img class=" tendingimgdtu" src="image/plus.png"></div>
+                <div class="df fdc jcc aic m0"><p>Cashmere tank + bag</p><p class="m0 cr">999$ -1900</p></div>
+         </div>  <div class="df fdc"> 
+                <div class="df jcc aic w20 h50 bpc bsc trendingimg1" style="background-image: url('image/product-3.jpg');"><img class=" tendingimgdtu" src="image/shopping-cart.png"><img class=" tendingimgdtu" src="image/heart.png"><img class=" tendingimgdtu" src="image/plus.png"></div>
+                <div class="df fdc jcc aic m0"><p>Cashmere tank + bag</p><p class="m0 cr">999$ -1900</p></div>
+         </div> 
+          <div class="df fdc"> 
+                <div class="df jcc aic w20 h50 bpc bsc trendingimg1" style="background-image: url('image/product-4.jpg');"><img class=" tendingimgdtu" src="image/shopping-cart.png"><img class=" tendingimgdtu" src="image/heart.png"><img class=" tendingimgdtu" src="image/plus.png"></div>
+                <div class="df fdc jcc aic m0"><p>Cashmere tank + bag</p><p class="m0 cr">999$ -1900</p></div>
+        
+        </div>
+    </div>
+
+    <div class="fourteen df jcc aic mt" style="grid-column: 2/20; font-size: 3vw;">Latest News</div>
+    <div class="fifteen df jcsb aic" style="grid-column: 2/20;">
+
+        <div class="df fdc ail w25"><img src="image/blog1.jpg" alt="">
+            <h2 class="m0">What Curling Irons Are The Best Ones</h2>
+            <h5 class="cg">Consectetur adipisicing elit. Laborum fuga incidunt laboriosam voluptas iure, delectus..</h5>
+            <a class="tdn cr" href="">Read More</a></div>
+        
+                    <div class="df fdc ail w25"><img src="image/blog2.jpg" alt="">
+            <h2 class="m0">Vogue's Ultimate Guide To Autumn/ Winter 2019 Shoes</h2>
+            <h5 class="cg">Consectetur adipisicing elit. Laborum fuga incidunt laboriosam voluptas iure, delectus..</h5>
+            <a class="tdn cr" href="">Read More</a></div>
+                    <div class="df fdc ail w25"><img src="image/blog3.jpg" alt="">
+            <h2 class="m0">What Curling Irons Are The Best Ones</h2>
+            <h5 class="cg">Consectetur adipisicing elit. Laborum fuga incidunt laboriosam voluptas iure, delectus..</h5>
+            <a class="tdn cr" href="">Read More</a></div>
+        </div>
+    <div class="sixteen df jcsb aic mt" style="grid-column: 2/20;">
+        <div class="df fdc aic w20"><img src="image/services1.svg"><h3>Fast And Free Delivery</h3> <h5 class="m0">Free Delivery On all Order</h5></div>
+        <div class="df fdc aic w20"><img src="image/services2.svg"><h3>Secure Payment</h3> <h5 class="m0">Free delivery on all orders</h5></div>
+         <div class="df fdc aic w20"><img src="image/services3.svg"><h3>Money Back Guarantee</h3> <h5 class="m0">Free delivery on all orders</h5></div>
+         <div class="df fdc aic w20"><img src="image/services4.svg"><h3>Online Support</h3> <h5 class="m0">Free delivery on all orders</h5></div>
+    </div>
+
+
+   <div class="seventeen df jcsb aic mt" style="grid-column: 2/20;">
+    <img class="w15" src="image/logo.png">
+    <div class="w15 df fdc"> <h3>Shop Men</h3><h5 class="" style="margin-top: -1vh;">Winter</h5><h5 class="" style="margin-top: -1vh;">Summer</h5> <h5 class="" style="margin-top: -1vh;">Formal</h5><h5 class="" style="margin-top: -1vh;">Casual</h5> </div>
+     <div class="w15 df fdc"> <h3>Shop Women</h3><h5 class="" style="margin-top: -1vh;">Winter</h5><h5 class="" style="margin-top: -1vh;">Summer</h5> <h5 class="" style="margin-top: -1vh;">Formal</h5><h5 class="" style="margin-top: -1vh;">Casual</h5> </div>
+    <div class="w15 df fdc"> <h3>Baby Collection</h3><h5 class="" style="margin-top: -1vh;">Winter</h5><h5 class="" style="margin-top: -1vh;">Summer</h5> <h5 class="" style="margin-top: -1vh;">Formal</h5><h5 class="" style="margin-top: -1vh;">Casual</h5></div>
+    <div class="w15 df fdc"> <h3>Quick Link</h3><h5 class="" style="margin-top: -1vh;">Track Your Order</h5><h5 class="" style="margin-top: -1vh;">About Us</h5> <h5 class="" style="margin-top: -1vh;">Contact</h5><h5 class="" style="margin-top: -1vh;">Support</h5> </div>
+  
+</div>
+
+<div class="df jcc aic fdc eighteen" style="grid-column: 2/20;"><hr style="border: none;               /* Remove the default ugly border */
+    height: 2px;                /* Make it 2px thick */
+    background-color: red;      /* Change color (matches your theme) */
+    width: 80%;                 /* Make it span 80% of the container */
+    margin: 20px auto;"><p>Copyright ©2026 All rights reserved | This template is made with  by Arif</p></div>
+</body>
+</html>

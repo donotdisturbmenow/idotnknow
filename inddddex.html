@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Webpage</title>
+    <link rel="stylesheet" href="s.css">
+    <script defer>
+document.addEventListener("DOMContentLoaded", function() {
+    const img = document.getElementById("searchbutton");
+    const input = document.getElementById("searchinput");
+
+    img.addEventListener("click", function() {
+        if (input.style.transform === "scale(0)") {
+            input.style.transform = "scale(1)";
+        } else {
+            input.style.transform = "scale(0)";
+        }
+    });
+});
+
+</script>
+</head>
+
+<style>
+    body{
+     display: flex;
+     justify-content: center;
+        align-items: center;
+     flex-direction: column;
+     width: 100%;
+    }
+ a{
+    color: rgb(218, 120, 15);
+    font-size: 0.9rem;
+    font-weight: 22rem;
+    margin-right: 1rem;
+    text-decoration: none;
+    
+}
+ a:hover{
+   color:rgb(65, 92, 24);
+}
+.mainfirstsubcontainer2 img{
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-left: 0.5rem;
+}
+.mainsecondsubcontainer2 img{
+      width: 1.5rem;
+    height: 1.5rem;
+    margin-left: 1rem;
+}
+.mainse img{
+    width: 1.5rem;
+    height: 1.5rem;
+  
+}
+/* Base styles to ensure smooth animations */
+ a,  img {
+  display: inline-block; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  transform-origin: center; 
+}
+
+/* Hover State: Huge 360-degree shadow and 1.5x zoom */
+ a:hover,     img:hover {
+  background: #fff;
+  color: #e03308;
+  
+  /* Zoom 1.5x */
+  transform: scale(1.5); 
+  
+  /* Huge, even shadow around everywhere: 
+     0 offset X, 0 offset Y, 30px blur, 10px spread */
+  box-shadow: 0 0 30px 10px rgba(23, 105, 137, 0.2); 
+  
+  position: relative;
+  z-index: 10; 
+}
+
+/* Click/Active State: Button "pressed" feel */
+ a:active,  img:active {
+  /* Slightly drops the zoom to look pressed */
+  transform: scale(1.35); 
+  
+  /* Shrinks the shadow back down tightly around the object */
+  box-shadow: 0 0 15px 2px rgba(68, 200, 233, 0.25); 
+}
+
+
+</style>
+
+<body">
+
+<div class="mainfirstcontainer df jcsb w90">
+<div class="mainfirstsubcontainer">
+<a>About Us</a><a>Privacy</a><a>FAQ</a><a>Careers</a>
+</div>
+<div class="mainfirstsubcontainer2 df jcc aic w30">
+<div class="mainfirstsubcontainer2link"><a>My Wishlist</a><a>Track My Order</a></div>
+<div class="mainfirstsubcontainer2image df jcc aic"><img src="image/facebook.png"><img src="image/twitter.png"><img src="image/instagram.png"><img src="image/twitter (1).png"><img src="image/youtube.png"></div>
+</div>
+</div>
+
+
+
+<div class="mainsecondcontainer df jcsb aic w90 mt">
+<img src="image/logo.png" class="w20">
+<div class="mainsecondsubcontainer1 w40 df jcsb aic">
+    <a href="#">Home</a> 
+    <a href="#">Men</a> 
+    <a href="#">Women</a> 
+    <a href="#">Baby Collection</a> 
+    <a href="#">Pages </a>
+    <a href="#">Blog</a>
+    <a href="#">Contact</a>
+</div>
+<div class="mainsecondsubcontainer2 w20 df">
+    <img id="searchbutton" src="image/search-interface-symbol (1).png">
+     <img src="image/customer-service.png">
+      <img src="image/shopping-cart.png">
+</div>
+</div>
+<marquee class="fsxl cg fwb" behavior="scroll" direction="left" scrollamount="10">
+Flat Sales Up To 50% Off! Shop Now!
+</marquee>
+<input class="aic asc" id="searchinput" type="text" placeholder="Search for products..." style="
+transform:scale(1);
+position:sticky;  
+  width: 90%;
+  max-width: 650px;
+  padding: 14px 28px;
+  font-size: 18px;
+  color: #333;
+  background: #ffffff;
+  border: 2px solid #00f2fe;
+  border-radius: 50px;
+  outline: none;
+  box-shadow: 0 0 25px rgba(0, 242, 254, 0.6);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+" onfocus="this.style.boxShadow='0 0 35px rgba(0, 242, 254, 0.9)'; this.style.borderColor='#00c6ff';" onblur="this.style.boxShadow='0 0 25px rgba(0, 242, 254, 0.6)'; this.style.borderColor='#00f2fe';">
+
+<marquee class="fsxl cg fwb" behavior="scroll" direction="left" scrollamount="10">
+Flat Sales Up To 50% Off! Shop Now!
+</marquee><marquee class="fsxl cg fwb" behavior="scroll" direction="left" scrollamount="10">
+Flat Sales Up To 50% Off! Shop Now!
+</marquee><marquee class="fsxl cg fwb" behavior="scroll" direction="left" scrollamount="10">
+Flat Sales Up To 50% Off! Shop Now!
+</marquee><marquee class="fsxl cg fwb" behavior="scroll" direction="left" scrollamount="10">
+Flat Sales Up To 50% Off! Shop Now!
+</marquee>
+
+</body>
+
+</html>

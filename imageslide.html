@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Slideshow - Bubble Text Effect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Page Setup */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #12161a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Fredoka', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Main Container */
+        .slideshow-container {
+            position: relative;
+            width: 85vw;
+            max-width: 900px;
+            height: 55vh;
+            max-height: 500px;
+        }
+
+        /* Individual Slide Wrapper */
+        .mySlides {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+
+        /* The Image Box Container */
+        .slide-img-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 2em; /* Extra rounded bubble corners */
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            
+            /* Entry Animation Base State */
+            transform: translateY(60px);
+            opacity: 0;
+            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease;
+        }
+
+        /* Background Image Layout */
+        .slide-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* --- TEXT OVERLAY LAYER --- */
+        .slide-text-overlay {
+            position: absolute;
+            bottom: 12%;
+            left: 8%;
+            right: 8%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* 🫧 BUBBLE TEXT EFFECT (h1) 🫧 */
+        .slide-text-overlay h1 {
+            color: #ffffff;
+            font-family: 'Fredoka One', sans-serif; /* Thick, bubbly font style */
+            font-size: 4rem;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1;
+            
+            /* Glossy bubble text shadow depth */
+            text-shadow: 
+                0 2px 0 #b1e4f7,
+                0 4px 0 #319bbd,
+                0 10px 20px rgba(0, 0, 0, 0.4),
+                0 15px 35px rgba(49, 155, 189, 0.3);
+            
+            /* Entry Animation: Starts scaled down to pop outward */
+            transform: scale(0.3) translateY(50px);
+            opacity: 0;
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s ease;
+        }
+
+        /* Subtitle Text (h2) */
+        .slide-text-overlay h2 {
+            color: #f0f8ff;
+            font-size: 1.2rem;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+            
+            /* Entry Animation Base State */
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease;
+        }
+
+        /* --- ACTIVE TRANSITIONS (When slide runs) --- */
+        .mySlides.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Image Box scales/lifts into place */
+        .mySlides.active .slide-img-box {
+            transform: translateY(0);
+            opacity: 1;
+            transition-delay: 0s;
+        }
+
+        /* Bubble text pops open with an elastic bounce, then kicks off the constant wobbling loop */
+        .mySlides.active .slide-text-overlay h1 {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            transition-delay: 0.25s;
+            /* Applies continuous floating bubble loop animation after landing */
+            animation: bubbleWobble 4s ease-in-out infinite alternate;
+            animation-delay: 1.2s; 
+        }
+
+        /* Subtitle pops up last */
+        .mySlides.active .slide-text-overlay h2 {
+            transform: translateY(0);
+            opacity: 1;
+            transition-delay: 0.45s;
+        }
+
+        /* --- CONSTANT BUBBLE WOBBLE KEYFRAMES --- */
+        @keyframes bubbleWobble {
+            0% {
+                transform: translateY(0px) scale(1) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-6px) scaleX(1.03) scaleY(0.97) rotate(0.5deg);
+            }
+            66% {
+                transform: translateY(-2px) scaleX(0.97) scaleY(1.02) rotate(-0.5deg);
+            }
+            100% {
+                transform: translateY(-10px) scale(1.01) rotate(0.8deg);
+            }
+        }
+
+        /* --- HOVER EFFECTS --- */
+        .slide-img-box:hover img {
+            transform: scale(1.05);
+        }
+        
+        .slide-img-box:active {
+            transform: scale(0.98);
+            transition: transform 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slideshow-container">
+        
+        <div class="mySlides">
+            <div class="slide-img-box">
+                <img src="image/image1.jpg" alt="Urban Rhythm">
+                <div class="slide-text-overlay">
+                    <h1>Pop Rhythm</h1>
+                    <h2>Discover Your Path</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <div class="slide-img-box">
+                <img src="image/image2.jpg" alt="Powerful Waters">
+                <div class="slide-text-overlay">
+                    <h1>Aqua Splash</h1>
+                    <h2>Embrace The Journey</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <div class="slide-img-box">
+                <img src="image/image3.jpg" alt="Infinite Trails">
+                <div class="slide-text-overlay">
+                    <h1>Dream Sky</h1>
+                    <h2>Explore The Summit</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll(".mySlides");
+
+        function cycleSlides() {
+            // Remove active state from old slide
+            slides[currentSlide].classList.remove("active");
+
+            // Safe loop rotation
+            currentSlide = (currentSlide + 1) % slides.length;
+
+            // Trigger animations on new active slide
+            slides[currentSlide].classList.add("active");
+
+            // Run cycle every 4.5 seconds to appreciate the wobble loop
+            setTimeout(cycleSlides, 4500);
+        }
+
+        // Initialize first slide state
+        slides[currentSlide].classList.add("active");
+        setTimeout(cycleSlides, 4500);
+    </script>
+
+</body>
+</html>

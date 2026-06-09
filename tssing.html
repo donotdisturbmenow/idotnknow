@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS White-Space Visualizer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      padding: 30px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    /* Container for the grid layout */
+    .grid-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    /* The individual test boxes */
+    .box-card {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      width: 220px; /* Forced narrow width to show text wrapping/overflow */
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border: 1px solid #e0e0e0;
+    }
+
+    .box-title {
+      font-size: 1.1rem;
+      color: #007bff;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #f0f2f5;
+      padding-bottom: 5px;
+    }
+
+    /* This is the visual boundary box */
+    .text-preview-box {
+      border: 2px dashed #ff4757;
+      background-color: #fffaf0;
+      padding: 10px;
+      height: 100px;
+      font-family: monospace; /* Makes spaces easier to count visually */
+      font-size: 14px;
+    }
+
+    /* --- THE CSS VALUES BEING TESTED --- */
+    .ws-normal {
+      white-space: normal;
+    }
+
+    .ws-nowrap {
+      white-space: nowrap;
+    }
+
+    .ws-pre {
+      white-space: pre;
+    }
+
+    .ws-pre-wrap {
+      white-space: pre-wrap;
+    }
+
+    .ws-pre-line {
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS <code>white-space</code> Property Visualizer</h1>
+
+  <div class="grid-container">
+
+    <div class="box-card">
+      <div class="box-title">white-space: normal</div>
+      <div class="text-preview-box ws-normal">Some      text.
+More text.</div>
+    </div>
+
+    <div class="box-card">
+      <div class="box-title">white-space: nowrap</div>
+      <div class="text-preview-box ws-nowrap">Some      text.
+More text.</div>
+    </div>
+
+    <div class="box-card">
+      <div class="box-title">white-space: pre</div>
+      <div class="text-preview-box
